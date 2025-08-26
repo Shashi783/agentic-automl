@@ -1,6 +1,6 @@
 # AutoML Service: A Case Study
 
-This project is a case study created for an interview to demonstrate the architectural thinking behind a complex machine learning system. 
+This project is a case study created for an interview to demonstrate the architectural thinking behind Agentic automl system.
 
 **Disclaimer:** Due to time constraints,
 I have just built demonstration for an "Agentic AutoML" service and how analysis module can be integrated with agents.The logic within individual files is kept minimal and not so clean. Most of the files just have placeholders and serve mainly to demonstrate the intended architecture and workflow.
