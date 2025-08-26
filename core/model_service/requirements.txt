@@ -1,0 +1,10 @@
+# requirements.txt
+pydantic-ai-slim[ag-ui,anthropic,bedrock,cli,cohere,evals,google,groq,huggingface,mcp,mistral,openai,retries,vertexai]==0.6.2
+python-dotenv==1.1.1
+pytest==8.4.1
+pytest-cover==3.0.0
+pre-commit
+fastapi>=0.115.0   # ✅ upgrade
+uvicorn>=0.30.0    # keep in sync with fastapi
+pydantic>=2.0.0
+sklearn

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+
+  # prometheus:
+  #   image: prom/prometheus
+  #   # volumes:
+  #   #   - ../config/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - "9090:9090"
+  #   environment:
+  #     - PROMETHEUS_SCRAPE_INTERVAL=${PROMETHEUS_SCRAPE_INTERVAL}
+  #   networks:
+  #     - deployment_network
+
+  # grafana:
+  #   image: grafana/grafana
+  #   ports:
+  #     - "3001:3000"
+  #   networks:
+  #     - deployment_network
+
+  model_service:
+    build:
+      context: ../
+      dockerfile: core/model_service/Dockerfile
+    container_name: model_service
+    ports:
+      - "8081:8080"
+    env_file:
+      - .env # Path to your .env file
+    volumes:
+      - ../core:/app/core
+      - ../data:/app/data/  # Persistent storage
+    command: >
+      sh -c "PYTHONPATH=/app uvicorn core.model_service.app:app --host 0.0.0.0 --port 8080 --log-level info --reload"
+    # environment:
+    #   - PYTHONPATH=/app
+    restart: unless-stopped
+    networks:
+      - deployment_network
+
+  agent_service:
+    build:
+      context: ../
+      dockerfile: core/agent_service/Dockerfile
+    container_name: agent_service
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env # Path to your .env file
+    volumes:
+      - ../core:/app/core
+      - ../data:/app/data/  # Persistent storage
+    command: >
+      sh -c "PYTHONPATH=/app uvicorn core.model_service.app:app --host 0.0.0.0 --port 8080 --log-level info --reload"
+    # environment:
+    #   - PYTHONPATH=/app
+    restart: unless-stopped
+    networks:
+      - deployment_network
+
+
+networks:
+  deployment_network:
+    driver: bridge
